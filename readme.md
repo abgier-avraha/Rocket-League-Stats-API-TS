@@ -46,9 +46,64 @@ You should immediately see a stream of events if your game is running.
 
 ### React Hook Example
 
-If you want a simple React based exampled like this then find [the source code over here](./demo/README.md).
+You can write a simple hook for React like this. [Example source code can be found here](./demo/README.md).
+
+```ts 
+// use-rl-stats.ts
+
+import { useEffect, useRef, useState } from "react";
+import { RlStatsApiClient, RlStatsEvent } from "rl-stats-api-client";
+
+type UseRlStatsOptions = {
+  port?: number;
+  host?: string;
+  onEvent?: (event: RlStatsEvent) => void;
+};
+
+export function useRlStats(opts: UseRlStatsOptions = {}) {
+  const clientRef = useRef<RlStatsApiClient | null>(null);
+  const [connected, setConnected] = useState(false);
+
+  // init once
+  if (!clientRef.current) {
+    clientRef.current = new RlStatsApiClient();
+  }
+
+  const client = clientRef.current;
+
+  useEffect(() => {
+    const unsubOpen = client.onOpen(() => setConnected(true));
+    const unsubClose = client.onClose(() => setConnected(false));
+
+    const unsubEvent = client.onEvent((event) => {
+      opts.onEvent?.(event);
+    });
+
+    client.open(opts.port, opts.host);
+
+    return () => {
+      unsubOpen();
+      unsubClose();
+      unsubEvent();
+      client.close();
+    };
+  }, [client]);
+
+  return {
+    connected,
+  };
+}
+```
 
 ```ts
+// rl-stats-demo.tsx
+
+'use client';
+
+import { useState } from "react";
+import { useRlStats } from "../_hooks/use-rl-stats";
+import { RlStatsEvent } from "rl-stats-api-client";
+
 export function RlStatsDemo() {
   const [lastEvent, setLastEvent] = useState<RlStatsEvent>()
   const { connected } = useRlStats({
