@@ -1,5 +1,5 @@
 {
-	"name": "rl-stats-api-bridge",
+	"name": "rl-bridge",
 	"version": "0.1.0",
 	"type": "module",
 	"main": "./dist/index.js",
@@ -13,6 +13,9 @@
 	"files": [
 		"dist"
 	],
+	"bin": {
+		"rl-bridge": "./dist/index.js"
+	},
 	"scripts": {
 		"format": "biome lint --fix ./src && biome format --write ./src && tsc",
 		"test": "vitest",

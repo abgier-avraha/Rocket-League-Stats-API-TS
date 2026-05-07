@@ -1,18 +1,18 @@
 import net from "node:net";
 import { WebSocketServer } from "ws";
 
-const BRIDGE_SERVER_PORT = 3001;
-const RL_SERVER_HOST = "172.27.192.1";
-const RL_SERVER_PORT = 49123;
+export function startBridgeServer(config: {
+	port: number;
+	rlhost: string;
+	rlport: number;
+}) {
+	const wss = new WebSocketServer({ port: config.port });
 
-export function startBridgeServer() {
-	const wss = new WebSocketServer({ port: BRIDGE_SERVER_PORT });
-
-	console.log(`Bridge server running on port ${BRIDGE_SERVER_PORT}`);
+	console.log(`Bridge server running on port ${config.port}`);
 
 	const socket = net.createConnection({
-		host: RL_SERVER_HOST,
-		port: RL_SERVER_PORT,
+		host: config.rlhost,
+		port: config.rlport,
 	});
 
 	let buffer = "";
@@ -24,7 +24,7 @@ export function startBridgeServer() {
 	socket.on("data", (data: Buffer) => {
 		buffer += data.toString("utf-8");
 
-		const messages: any[] = [];
+		const messages: unknown[] = [];
 
 		let start = buffer.indexOf("{");
 

@@ -1,1 +1,73 @@
-TODO:
+# Rocket League Stats API TS
+
+This repo provides a bridge server and client library for building web based applications that stream live Rocket League game data.
+
+The events are fully typed within the client library. [Find them here.](./client/src/events)
+
+## Quickstart
+
+### 1. Start Bridge Server
+
+The bridge server forwards rocket league game data to a web socket server.
+
+Simply run `npx rl-bridge` to start the bridge
+- Optionally specify the port the bridge server runs on with `--port 3333`
+- Optionally specify the port the bridge is pointing tod for Rocket League Stats using API `--rlport 49123`
+- Optionally specify the host the bridge is pointing to for Rocket League Stats using API `--rlhost 172.27.192.1`
+
+You should immediately see a stream of events if your game is running.
+
+
+### 2. Integrate the Bridge Client
+
+1. Install the package `npm install rl-stats-api-client`
+2. Connect and listen for events.
+    ```ts
+    function disposableListener() {
+      const unsubOpen = client.onOpen(() => setConnected(true));
+      const unsubClose = client.onClose(() => setConnected(false));
+
+      const unsubEvent = client.onEvent((event) => {
+        // Handle the event
+        console.log(event)
+      });
+
+      client.open(opts.port, opts.host);
+
+      return () => {
+        unSubOpen();
+        unsubClose();
+        unsubEvent();
+      }
+    }
+
+    const dispose = disposableListener();
+    ```
+
+### React Hook Example
+
+If you want a simple React based exampled like this then find [the source code over here](./demo/README.md).
+
+```ts
+export function RlStatsDemo() {
+  const [lastEvent, setLastEvent] = useState<RlStatsEvent>()
+  const { connected } = useRlStats({
+    port: 3001,
+    host: "localhost",
+    onEvent: (e) => {
+      console.log(e)
+      setLastEvent(e)
+    }
+  });
+
+  return (
+    <div>
+      <h1>Rocket League Stats</h1>
+
+      <p>Status: {connected ? "🟢 Connected" : "🔴 Disconnected"}</p>
+
+      <pre>{JSON.stringify(lastEvent, null, 2)}</pre>
+    </div>
+  );
+}
+```
