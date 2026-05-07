@@ -1,14 +1,19 @@
 'use client';
 
+import { useState } from "react";
 import { useRlStats } from "../_hooks/use-rl-stats";
+import { RlStatsEvent } from "rl-stats-api-client";
 
 export function RlStatsDemo() {
-  const { connected, lastEvent } = useRlStats({
+  const [lastEvent, setLastEvent] = useState<RlStatsEvent>()
+  const { connected } = useRlStats({
     port: 3001,
     host: "localhost",
+    onEvent: (e) => {
+      console.log(e)
+      setLastEvent(e)
+    }
   });
-
-  console.log(lastEvent)
 
   return (
     <div>

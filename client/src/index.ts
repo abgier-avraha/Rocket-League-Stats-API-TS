@@ -1,4 +1,4 @@
-export type RlStatsEvent = unknown
+export type RlStatsEvent = unknown;
 
 export class RlStatsApiClient {
 	private ws?: WebSocket;
@@ -25,12 +25,12 @@ export class RlStatsApiClient {
 		this.ws.onmessage = (event) => {
 			try {
 				Array.from(this.onEventCallbacks.values()).forEach((cb) => {
-          const parsed = JSON.parse(event.data);
-          // TODO: types with discrim
+					const parsed = JSON.parse(event.data);
+					// TODO: types with discrim
 					cb({
-            Event: parsed.Event,
-            Data: JSON.parse(parsed.Data)
-          });
+						Event: parsed.Event,
+						Data: JSON.parse(parsed.Data),
+					});
 				});
 			} catch {
 				Array.from(this.onEventCallbacks.values()).forEach((cb) => {

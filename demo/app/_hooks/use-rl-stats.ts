@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { RlStatsApiClient, RlStatsEvent } from 'rl-stats-api-client'
+import { RlStatsApiClient, RlStatsEvent } from "rl-stats-api-client";
 
-export function useRlStats(opts: {
-  port?: number, host?: "localhost"
-}) {
-  const clientRef = useRef<RlStatsApiClient | undefined>(undefined);
+type UseRlStatsOptions = {
+  port?: number;
+  host?: string;
+  onEvent?: (event: RlStatsEvent) => void;
+};
+
+export function useRlStats(opts: UseRlStatsOptions = {}) {
+  const clientRef = useRef<RlStatsApiClient | null>(null);
   const [connected, setConnected] = useState(false);
-  const [lastEvent, setLastEvent] = useState<RlStatsEvent | undefined>(undefined);
 
+  // init once
   if (!clientRef.current) {
     clientRef.current = new RlStatsApiClient();
   }
@@ -17,7 +21,10 @@ export function useRlStats(opts: {
   useEffect(() => {
     const unsubOpen = client.onOpen(() => setConnected(true));
     const unsubClose = client.onClose(() => setConnected(false));
-    const unsubEvent = client.onEvent(setLastEvent);
+
+    const unsubEvent = client.onEvent((event) => {
+      opts.onEvent?.(event);
+    });
 
     client.open(opts.port, opts.host);
 
@@ -31,6 +38,5 @@ export function useRlStats(opts: {
 
   return {
     connected,
-    lastEvent,
   };
 }
