@@ -47,10 +47,14 @@ export function startBridgeServer() {
 			const raw = buffer.slice(start, end);
 
 			try {
-				const parsed = JSON.parse(raw);
+				const event = JSON.parse(raw);
+				const parsed = {
+					Event: event.Event,
+					Data: JSON.parse(event.Data),
+				};
 				messages.push(parsed);
-			} catch (err) {
-				console.warn("Failed to parse frame:", raw);
+			} catch (err: unknown) {
+				console.warn("Failed to parse frame:", err, raw);
 			}
 
 			buffer = buffer.slice(end);
