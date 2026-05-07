@@ -1,4 +1,4 @@
-import { startBridgeServer } from "./bridge";
+import { startBridgeServer } from "./bridge.js";
 
 function parseArgs() {
 	const args = process.argv.slice(2);
@@ -15,4 +15,6 @@ function parseArgs() {
 	};
 }
 
-startBridgeServer(parseArgs());
+export function start() {
+	startBridgeServer(parseArgs());
+}

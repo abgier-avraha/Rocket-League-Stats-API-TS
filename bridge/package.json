@@ -8,13 +8,17 @@
 		".": {
 			"import": "./dist/index.js",
 			"types": "./dist/index.d.ts"
+		},
+    "./bridge":  {
+			"import": "./dist/bridge.js",
+			"types": "./dist/bridge.d.ts"
 		}
 	},
 	"files": [
 		"dist"
 	],
 	"bin": {
-		"rl-bridge": "./dist/index.js"
+		"rl-bridge": "./dist/cli.js"
 	},
 	"scripts": {
 		"format": "biome lint --fix ./src && biome format --write ./src && tsc",
