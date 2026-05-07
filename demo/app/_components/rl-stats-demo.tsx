@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRlStats } from "../_hooks/use-rl-stats";
-import { RlStatsEvent } from "rl-stats-api-client";
+import { RlStatsEvent } from "rl-ts-stats-api-client";
 
 export function RlStatsDemo() {
   const [lastEvent, setLastEvent] = useState<RlStatsEvent>()

@@ -1,6 +1,8 @@
 {
-	"name": "rl-bridge",
-	"version": "0.1.0",
+	"name": "rl-ts-bridge",
+	"description": "Rocket League Stats API Bridge Server",
+	"version": "0.1.1",
+	"repository": "https://github.com/abgier-avraha/Rocket-League-Stats-API-TS",
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -18,7 +20,7 @@
 		"dist"
 	],
 	"bin": {
-		"rl-bridge": "./dist/cli.js"
+		"rl-ts-bridge": "./dist/cli.js"
 	},
 	"scripts": {
 		"format": "biome lint --fix ./src && biome format --write ./src && tsc",

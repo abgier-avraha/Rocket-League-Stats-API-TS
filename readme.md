@@ -10,7 +10,7 @@ The events are fully typed within the client library. [Find them here.](./client
 
 The bridge server forwards rocket league game data to a web socket server.
 
-Simply run `npx rl-bridge` to start the bridge
+Simply run `npx rl-ts-bridge` to start the bridge
 - Optionally specify the port the bridge server runs on with `--port 3333`
 - Optionally specify the port the bridge is pointing tod for Rocket League Stats using API `--rlport 49123`
 - Optionally specify the host the bridge is pointing to for Rocket League Stats using API `--rlhost 172.27.192.1`
@@ -20,7 +20,7 @@ You should immediately see a stream of events if your game is running.
 
 ### 2. Integrate the Bridge Client
 
-1. Install the package `npm install rl-stats-api-client`
+1. Install the package `npm install rl-ts-stats-api-client`
 2. Connect and listen for events.
     ```ts
     function disposableListener() {
@@ -52,7 +52,7 @@ You can write a simple hook for React like this. [Example source code can be fou
 // use-rl-stats.ts
 
 import { useEffect, useRef, useState } from "react";
-import { RlStatsApiClient, RlStatsEvent } from "rl-stats-api-client";
+import { RlStatsApiClient, RlStatsEvent } from "rl-ts-stats-api-client";
 
 type UseRlStatsOptions = {
   port?: number;
@@ -102,7 +102,7 @@ export function useRlStats(opts: UseRlStatsOptions = {}) {
 
 import { useState } from "react";
 import { useRlStats } from "../_hooks/use-rl-stats";
-import { RlStatsEvent } from "rl-stats-api-client";
+import { RlStatsEvent } from "rl-ts-stats-api-client";
 
 export function RlStatsDemo() {
   const [lastEvent, setLastEvent] = useState<RlStatsEvent>()

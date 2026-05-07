@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import { start } from "rl-bridge";
+import { start } from "rl-ts-bridge";
 
 start();
