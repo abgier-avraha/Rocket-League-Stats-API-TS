@@ -8,6 +8,8 @@ export function RlStatsDemo() {
     host: "localhost",
   });
 
+  console.log(lastEvent)
+
   return (
     <div>
       <h1>Rocket League Stats</h1>

@@ -25,7 +25,12 @@ export class RlStatsApiClient {
 		this.ws.onmessage = (event) => {
 			try {
 				Array.from(this.onEventCallbacks.values()).forEach((cb) => {
-					cb(JSON.parse(event.data));
+          const parsed = JSON.parse(event.data);
+          // TODO: types with discrim
+					cb({
+            Event: parsed.Event,
+            Data: JSON.parse(parsed.Data)
+          });
 				});
 			} catch {
 				Array.from(this.onEventCallbacks.values()).forEach((cb) => {
