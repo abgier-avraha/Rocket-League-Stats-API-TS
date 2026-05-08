@@ -26,7 +26,12 @@ The events are fully typed within the client library. [Find them here.](./client
 
 ## Quickstart
 
-### 1. Start Bridge Server
+
+### 1. Configure Your RL Stats API Port
+
+[Configuration docs here](https://www.rocketleague.com/en/developer/stats-api#overview).
+
+### 2. Start Bridge Server
 
 The bridge server forwards rocket league game data to a web socket server.
 
@@ -38,7 +43,7 @@ Simply run `npx rl-ts-bridge` to start the bridge
 You should immediately see a stream of events if your game is running.
 
 
-### 2. Integrate the Bridge Client
+### 3. Integrate the Bridge Client
 
 1. Install the package `npm install rl-ts-client`
 2. Connect and listen for events.
