@@ -1,5 +1,25 @@
 # Rocket League Stats API TS
 
+<table>
+<tr>
+<td><strong>Bridge</strong></td>
+<td>
+
+[![npm version](https://img.shields.io/npm/v/rl-ts-bridge?style=flat-square)](https://www.npmjs.com/package/rl-ts-bridge)
+
+</td>
+</tr>
+
+<tr>
+<td><strong>Client</strong></td>
+<td>
+
+[![npm version](https://img.shields.io/npm/v/rl-ts-client?style=flat-square)](https://www.npmjs.com/package/rl-ts-client)
+
+</td>
+</tr>
+</table>
+
 This repo provides a bridge server and client library for building web based applications that stream live Rocket League game data.
 
 The events are fully typed within the client library. [Find them here.](./client/src/events)
