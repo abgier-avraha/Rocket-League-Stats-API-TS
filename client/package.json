@@ -2,7 +2,12 @@
 	"name": "rl-ts-stats-api-client",
 	"description": "Rocket League Stats API Client",
 	"version": "0.1.1",
-	"repository": "https://github.com/abgier-avraha/Rocket-League-Stats-API-TS",
+	"repository": {
+		"type": "git",
+  		"url": "git+https://github.com/abgier-avraha/Rocket-League-Stats-API-TS.git",
+	    "directory": "client"
+	},
+	"homepage": "https://github.com/abgier-avraha/Rocket-League-Stats-API-TS/tree/main/client",
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
