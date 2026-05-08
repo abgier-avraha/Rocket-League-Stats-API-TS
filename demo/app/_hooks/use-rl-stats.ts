@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { RlStatsApiClient, RlStatsEvent } from "rl-ts-stats-api-client";
+import { RlStatsApiClient, type RlStatsEvent } from "rl-ts-client";
 
 type UseRlStatsOptions = {
 	port?: number;
@@ -18,6 +18,7 @@ export function useRlStats(opts: UseRlStatsOptions = {}) {
 
 	const client = clientRef.current;
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: run once
 	useEffect(() => {
 		const unsubOpen = client.onOpen(() => setConnected(true));
 		const unsubClose = client.onClose(() => setConnected(false));
@@ -34,7 +35,7 @@ export function useRlStats(opts: UseRlStatsOptions = {}) {
 			unsubEvent();
 			client.close();
 		};
-	}, [client]);
+	}, []);
 
 	return {
 		connected,

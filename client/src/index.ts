@@ -1,7 +1,5 @@
 import type { RlStatsEvent } from "./events";
 
-export { RlStatsEvent } from "./events";
-
 export class RlStatsApiClient {
 	private ws?: WebSocket;
 

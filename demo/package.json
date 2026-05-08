@@ -6,13 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "format": "biome lint --fix ./src && biome format --write ./src && tsc"
+    "format": "biome lint --fix ./app && biome format --write ./app && tsc",
+    "remote": "tsx ./remote/server.ts"
   },
   "dependencies": {
     "next": "16.2.5",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "rl-ts-stats-api-client": "file:../client"
+    "rl-ts-client": "file:../client"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -22,6 +23,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.5",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

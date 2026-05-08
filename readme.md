@@ -20,7 +20,7 @@ You should immediately see a stream of events if your game is running.
 
 ### 2. Integrate the Bridge Client
 
-1. Install the package `npm install rl-ts-stats-api-client`
+1. Install the package `npm install rl-ts-client`
 2. Connect and listen for events.
     ```ts
     function disposableListener() {
@@ -52,7 +52,7 @@ You can write a simple hook for React like this. [Example source code can be fou
 // use-rl-stats.ts
 
 import { useEffect, useRef, useState } from "react";
-import { RlStatsApiClient, RlStatsEvent } from "rl-ts-stats-api-client";
+import { RlStatsApiClient, RlStatsEvent } from "rl-ts-client";
 
 type UseRlStatsOptions = {
   port?: number;
@@ -102,7 +102,7 @@ export function useRlStats(opts: UseRlStatsOptions = {}) {
 
 import { useState } from "react";
 import { useRlStats } from "../_hooks/use-rl-stats";
-import { RlStatsEvent } from "rl-ts-stats-api-client";
+import { RlStatsEvent } from "rl-ts-client";
 
 export function RlStatsDemo() {
   const [lastEvent, setLastEvent] = useState<RlStatsEvent>()
