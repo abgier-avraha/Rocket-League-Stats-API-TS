@@ -32,8 +32,8 @@ The bridge server forwards rocket league game data to a web socket server.
 
 Simply run `npx rl-ts-bridge` to start the bridge
 - Optionally specify the port the bridge server runs on with `--port 3333`
-- Optionally specify the port the bridge is pointing tod for Rocket League Stats using API `--rlport 49123`
-- Optionally specify the host the bridge is pointing to for Rocket League Stats using API `--rlhost 172.27.192.1`
+- Optionally specify the port the bridge is pointing to for Rocket League Stats API with `--rlport 49123`
+- Optionally specify the host the bridge is pointing to for Rocket League Stats API with `--rlhost 172.27.192.1`
 
 You should immediately see a stream of events if your game is running.
 
