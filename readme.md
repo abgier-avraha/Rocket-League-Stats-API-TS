@@ -1,5 +1,25 @@
 # Rocket League Stats API TS
 
+<table>
+<tr>
+<td><strong>Bridge</strong></td>
+<td>
+
+[![npm version](https://img.shields.io/npm/v/rl-ts-bridge?style=flat-square)](https://www.npmjs.com/package/rl-ts-bridge)
+
+</td>
+</tr>
+
+<tr>
+<td><strong>Client</strong></td>
+<td>
+
+[![npm version](https://img.shields.io/npm/v/rl-ts-client?style=flat-square)](https://www.npmjs.com/package/rl-ts-client)
+
+</td>
+</tr>
+</table>
+
 This repo provides a bridge server and client library for building web based applications that stream live Rocket League game data.
 
 The events are fully typed within the client library. [Find them here.](./client/src/events)
@@ -12,8 +32,8 @@ The bridge server forwards rocket league game data to a web socket server.
 
 Simply run `npx rl-ts-bridge` to start the bridge
 - Optionally specify the port the bridge server runs on with `--port 3333`
-- Optionally specify the port the bridge is pointing tod for Rocket League Stats using API `--rlport 49123`
-- Optionally specify the host the bridge is pointing to for Rocket League Stats using API `--rlhost 172.27.192.1`
+- Optionally specify the port the bridge is pointing to for Rocket League Stats API with `--rlport 49123`
+- Optionally specify the host the bridge is pointing to for Rocket League Stats API with `--rlhost 172.27.192.1`
 
 You should immediately see a stream of events if your game is running.
 

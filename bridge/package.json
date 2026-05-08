@@ -2,7 +2,12 @@
 	"name": "rl-ts-bridge",
 	"description": "Rocket League Stats API Bridge Server",
 	"version": "0.1.2",
-	"repository": "https://github.com/abgier-avraha/Rocket-League-Stats-API-TS",
+	"repository": {
+		"type": "git",
+  		"url": "git+https://github.com/abgier-avraha/Rocket-League-Stats-API-TS.git",
+	    "directory": "bridge"
+	},
+	"homepage": "https://github.com/abgier-avraha/Rocket-League-Stats-API-TS/tree/main/bridge",
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
