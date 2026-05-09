@@ -22,7 +22,7 @@
 
 This repo provides a bridge server and client library for building web based applications that stream live Rocket League game data.
 
-The events are fully typed within the client library. [Find them here.](./client/src/events)
+The events are fully typed within the client library. [Find them here.](https://github.com/abgier-avraha/Rocket-League-Stats-API-TS/tree/main/client/src/events)
 
 ## Quickstart
 
@@ -71,8 +71,8 @@ You should immediately see a stream of events if your game is running.
 
 ### React Example for Stream Overlay with Remote Control Page
 
-[Example repo with stream overlay and remote  controls](./demo/README.md).
+[Example repo with stream overlay and remote  controls](https://github.com/abgier-avraha/Rocket-League-Stats-API-TS/tree/main/demo).
 
-![](./images/overlay.png)
+![](https://github.com/abgier-avraha/Rocket-League-Stats-API-TS/blob/main/images/overlay.png?raw=true)
 
-![](./images/overlay-remote.png)
+![](https://github.com/abgier-avraha/Rocket-League-Stats-API-TS/blob/main/images/overlay-remote.png?raw=true)
