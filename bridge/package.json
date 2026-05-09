@@ -55,7 +55,7 @@
 		"test": "vitest",
 		"clean": "rimraf dist",
 		"build": "npm run clean && tsc",
-		"dev": "tsx ./src/index.ts",
+		"dev": "npm run build && node ./dist/cli.js",
 		"prepublishOnly": "cp ../readme.md ./readme.md"
 	},
 	"devDependencies": {
@@ -67,7 +67,6 @@
 		"vitest": "^3.2.4"
 	},
 	"dependencies": {
-		"tsx": "^4.21.0",
 		"ws": "^8.20.0",
 		"zod": "^4.4.3"
 	}
