@@ -1,13 +1,32 @@
 {
 	"name": "rl-ts-client",
 	"description": "Rocket League Stats API Client",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"repository": {
 		"type": "git",
   		"url": "git+https://github.com/abgier-avraha/Rocket-League-Stats-API-TS.git",
 	    "directory": "client"
 	},
 	"homepage": "https://github.com/abgier-avraha/Rocket-League-Stats-API-TS/tree/main/client",
+  "keywords": [
+    "rocket-league",
+    "rocket-league-stats-api",
+    "rocket-league-api",
+    "rocket-league-stats",
+    "rocket-league-ts",
+    "rocketleague",
+    "gaming",
+    "esports",
+    "websocket",
+    "tcp-socket",
+    "stats-api",
+    "typescript",
+    "browser",
+		"web",
+    "api-client",
+    "real-time",
+    "bakkesmod-alternative"
+  ],
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
