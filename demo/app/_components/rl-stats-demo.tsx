@@ -19,8 +19,15 @@ export function RlStatsDemo() {
 		},
 	});
 
-	const { matchTitle, seriesLength, currentGame, leftTeamWins, rightTeamWins } =
-		useRemoteReader();
+	const {
+		matchTitle,
+		seriesLength,
+		currentGame,
+		leftTeamWins,
+		rightTeamWins,
+		leftTeamName,
+		rightTeamName,
+	} = useRemoteReader();
 
 	if (!gameState) {
 		return null;
@@ -51,8 +58,7 @@ export function RlStatsDemo() {
 					<div className="flex h-full bg-gradient-to-l from-blue-900 to-blue-700">
 						<div className="flex flex-1 justify-end items-center relative">
 							<div className="pr-4 text-3xl font-black  tracking-wide">
-								{/* TODO: remote control */}
-								{leftTeam.Name}
+								{leftTeamName ? leftTeamName : leftTeam.Name}
 							</div>
 							<div className="absolute bottom-0 left-0 right-0 pr-4 p-1 flex flex-row justify-end gap-2 bg-white/20 h-[18px]">
 								{Array.from({ length: leftTeamWins }).map((_, i) => (
@@ -76,8 +82,6 @@ export function RlStatsDemo() {
 						<div className="text-4xl font-black leading-none tabular-nums">
 							{formattedTime}
 						</div>
-
-						{/* TODO: remote control */}
 
 						{seriesLength > 1 && (
 							<div className="mt-1 text-[11px] uppercase tracking-[0.25em] text-zinc-400">
@@ -104,7 +108,7 @@ export function RlStatsDemo() {
 								))}
 							</div>
 							<div className="pl-4 text-3xl font-black tracking-wide">
-								{rightTeam.Name}
+								{rightTeamName ? rightTeamName : rightTeam.Name}
 							</div>
 						</div>
 					</div>

@@ -2,6 +2,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Open Rocket League
+
+Start the bridge server
+
+```bash
+npx rl-ts-bridge
+```
+
 Install the dependencies:
 
 ```bash

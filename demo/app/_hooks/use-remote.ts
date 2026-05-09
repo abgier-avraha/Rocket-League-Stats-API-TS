@@ -13,6 +13,13 @@ export type OverlayMessage =
 				leftTeamWins: number;
 				rightTeamWins: number;
 			};
+	  }
+	| {
+			type: "set_team_names";
+			value: {
+				leftTeamName: string;
+				rightTeamName: string;
+			};
 	  };
 
 export type OverlayState = {
@@ -21,6 +28,8 @@ export type OverlayState = {
 	seriesLength: number;
 	leftTeamWins: number;
 	rightTeamWins: number;
+	leftTeamName: string;
+	rightTeamName: string;
 };
 
 export function useRemoteController(url = "ws://localhost:3002") {
@@ -47,6 +56,8 @@ export function useRemoteController(url = "ws://localhost:3002") {
 			leftTeamWins: number;
 			rightTeamWins: number;
 		}) => send({ type: "set_series_info", value }),
+		setTeamNames: (value: { leftTeamName: string; rightTeamName: string }) =>
+			send({ type: "set_team_names", value }),
 	};
 }
 
@@ -59,6 +70,8 @@ export function useRemoteReader(url = "ws://localhost:3002") {
 		leftTeamWins: 0,
 		rightTeamWins: 0,
 		seriesLength: 1,
+		leftTeamName: "",
+		rightTeamName: "",
 	});
 
 	useEffect(() => {
@@ -80,6 +93,13 @@ export function useRemoteReader(url = "ws://localhost:3002") {
 					leftTeamWins: msg.value.leftTeamWins,
 					rightTeamWins: msg.value.rightTeamWins,
 					seriesLength: msg.value.seriesLength,
+				}));
+			}
+			if (msg.type === "set_team_names") {
+				setOverlay((o) => ({
+					...o,
+					leftTeamName: msg.value.leftTeamName,
+					rightTeamName: msg.value.rightTeamName,
 				}));
 			}
 		};

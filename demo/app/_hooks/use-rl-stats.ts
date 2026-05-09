@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { RlStatsApiClient, type RlStatsEvent } from "rl-ts-client";
+import { RlStatsApiClient } from "rl-ts-client";
+import type { RlStatsEvent } from "rl-ts-client/events";
 
 type UseRlStatsOptions = {
 	port?: number;
