@@ -48,6 +48,10 @@ You should immediately see a stream of events if your game is running.
 1. Install the package `npm install rl-ts-client`
 2. Connect and listen for events.
     ```ts
+    import { RlStatsApiClient } from "rl-ts-client";
+
+    const client = new RlStatsApiClient()
+
     function disposableListener() {
       const unsubOpen = client.onOpen(() => setConnected(true));
       const unsubClose = client.onClose(() => setConnected(false));
@@ -57,10 +61,10 @@ You should immediately see a stream of events if your game is running.
         console.log(event)
       });
 
-      client.open(opts.port, opts.host);
+      client.open();
 
       return () => {
-        unSubOpen();
+        unsubOpen();
         unsubClose();
         unsubEvent();
       }
