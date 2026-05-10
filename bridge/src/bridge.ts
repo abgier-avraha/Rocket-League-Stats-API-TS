@@ -1,5 +1,5 @@
 import net from "node:net";
-import { WebSocketServer } from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 
 type BridgeConfig = {
 	port: number;
@@ -12,6 +12,7 @@ export class BridgeServer {
 	private socket: net.Socket | null = null;
 	private buffer = "";
 	private isShuttingDown = false;
+	private reconnectTimer: NodeJS.Timeout | null = null;
 
 	constructor(private config: BridgeConfig) {
 		this.wss = new WebSocketServer({ port: config.port });
@@ -24,9 +25,16 @@ export class BridgeServer {
 	public connect() {
 		if (this.isShuttingDown) return;
 
+		// Prevent duplicate sockets
+		if (this.socket) {
+			this.socket.destroy();
+			this.socket = null;
+		}
+
 		this.socket = net.createConnection({
 			host: this.config.rlhost,
 			port: this.config.rlport,
+			timeout: 5000,
 		});
 
 		this.socket.on("connect", this.onConnect);
@@ -37,7 +45,13 @@ export class BridgeServer {
 
 	private onConnect = () => {
 		console.log("Connected to RL Stats TCP stream");
+
 		this.buffer = "";
+
+		if (this.reconnectTimer) {
+			clearTimeout(this.reconnectTimer);
+			this.reconnectTimer = null;
+		}
 	};
 
 	private onData = (data: Buffer) => {
@@ -47,10 +61,6 @@ export class BridgeServer {
 
 		let start = this.buffer.indexOf("{");
 
-		/*
-			Read through buffer until a json object is completed
-			then slice it out of buffer.
-		*/
 		while (start !== -1) {
 			let open = 0;
 			let end = -1;
@@ -65,10 +75,9 @@ export class BridgeServer {
 				}
 			}
 
-			// Break if no end to json object yet
+			// Incomplete JSON object
 			if (end === -1) break;
 
-			// Get the json object
 			const raw = this.buffer.slice(start, end);
 
 			try {
@@ -84,18 +93,14 @@ export class BridgeServer {
 				console.warn("Failed to parse frame:", err, raw);
 			}
 
-			// Remove the object from the buffer
 			this.buffer = this.buffer.slice(end);
 
-			// Check if the start of another object was in the frame
 			start = this.buffer.indexOf("{");
 		}
 
 		for (const msg of messages) {
-			console.debug(msg);
-
 			console.log(
-				`Bridge received message, forwarding to ${this.wss.clients.size} websocket clients`,
+				`Forwarding message to ${this.wss.clients.size} websocket clients`,
 			);
 
 			this.broadcast(msg);
@@ -106,41 +111,70 @@ export class BridgeServer {
 		const payload = JSON.stringify(msg);
 
 		for (const client of this.wss.clients) {
-			if (client.readyState === 1) {
+			if (client.readyState === WebSocket.OPEN) {
 				client.send(payload);
 			}
 		}
 	}
 
 	private onError = (err: Error) => {
-		console.error("TCP error:", err);
+		if (this.isShuttingDown) return;
+
+		console.error("TCP error:", err.message);
 	};
 
 	private onClose = () => {
 		console.log("RL Stats TCP stream connection was closed");
 
-		if (this.isShuttingDown) return;
+		this.socket = null;
 
-		setTimeout(() => {
+		if (this.isShuttingDown) {
+			console.log("Skipping reconnect because server is shutting down");
+			return;
+		}
+
+		// Prevent multiple reconnect timers
+		if (this.reconnectTimer) return;
+
+		this.reconnectTimer = setTimeout(() => {
+			this.reconnectTimer = null;
+
+			if (this.isShuttingDown) return;
+
 			console.log("Attempting to reconnect...");
 			this.connect();
 		}, 3000);
 	};
 
 	private setupShutdown() {
-		process.on("SIGINT", () => {
-			console.log("Shutting down...");
-			this.isShuttingDown = true;
-
-			if (this.socket) {
-				this.socket.removeAllListeners();
-				this.socket.destroy();
-				this.socket = null;
-			}
-
-			this.wss.close(() => {
-				process.exit(0);
-			});
-		});
+		process.on("SIGINT", this.shutdown);
+		process.on("SIGTERM", this.shutdown);
 	}
+
+	private shutdown = () => {
+		if (this.isShuttingDown) return;
+
+		console.log("Shutting down...");
+
+		this.isShuttingDown = true;
+
+		if (this.reconnectTimer) {
+			clearTimeout(this.reconnectTimer);
+			this.reconnectTimer = null;
+		}
+
+		if (this.socket) {
+			this.socket.destroy();
+			this.socket = null;
+		}
+
+		this.wss.close(() => {
+			process.exit(0);
+		});
+
+		// Fallback
+		setTimeout(() => {
+			process.exit(0);
+		}, 2000);
+	};
 }
